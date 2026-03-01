@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>StyleAI — Your Personal Stylist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <!-- Decorative background blobs -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <div class="page-wrapper">
+
+    <!-- Header -->
+    <header class="site-header">
+      <div class="logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">StyleAI</span>
+      </div>
+      <p class="tagline">Curated looks, crafted for you</p>
+    </header>
+
+    <!-- Form Card -->
+    <main class="form-card">
+      <form action="/get" method="POST" id="styleForm">
+
+        <!-- Progress bar -->
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <p class="progress-label" id="progressLabel">Select your preferences to get started</p>
+
+        <!-- AGE -->
+        <fieldset class="option-group" data-field="age">
+          <legend>How old are you?</legend>
+          <div class="chip-row">
+            <button type="button" class="chip" onclick="selectOption('age', this)">Teen</button>
+            <button type="button" class="chip" onclick="selectOption('age', this)">20s</button>
+            <button type="button" class="chip" onclick="selectOption('age', this)">30+</button>
+          </div>
+          <input type="hidden" name="age" id="age">
+        </fieldset>
+
+        <!-- GENDER -->
+        <fieldset class="option-group" data-field="gender">
+          <legend>Your gender</legend>
+          <div class="chip-row">
+            <button type="button" class="chip chip-gender" onclick="selectOption('gender', this)">
+              <span class="chip-icon">♂</span> Male
+            </button>
+            <button type="button" class="chip chip-gender" onclick="selectOption('gender', this)">
+              <span class="chip-icon">♀</span> Female
+            </button>
+          </div>
+          <input type="hidden" name="gender" id="gender">
+        </fieldset>
+
+        <!-- OCCASION -->
+        <fieldset class="option-group" data-field="occasion">
+          <legend>What's the occasion?</legend>
+          <div class="chip-row chip-row-4">
+            <button type="button" class="chip chip-occasion" onclick="selectOption('occasion', this)" data-occasion="Interview">
+              <span class="chip-icon">💼</span> Interview
+            </button>
+            <button type="button" class="chip chip-occasion" onclick="selectOption('occasion', this)" data-occasion="Wedding">
+              <span class="chip-icon">💍</span> Wedding
+            </button>
+            <button type="button" class="chip chip-occasion" onclick="selectOption('occasion', this)" data-occasion="Party">
+              <span class="chip-icon">🎉</span> Party
+            </button>
+            <button type="button" class="chip chip-occasion" onclick="selectOption('occasion', this)" data-occasion="Casual">
+              <span class="chip-icon">👟</span> Casual
+            </button>
+          </div>
+          <input type="hidden" name="occasion" id="occasion">
+        </fieldset>
+
+        <!-- NATIONALITY (only for wedding) -->
+        <fieldset class="option-group hidden" data-field="nationality" id="nationalityGroup">
+          <legend>Wedding style</legend>
+          <div class="chip-row">
+            <button type="button" class="chip" onclick="selectOption('nationality', this)">🪷 Indian</button>
+            <button type="button" class="chip" onclick="selectOption('nationality', this)">🌹 Western</button>
+          </div>
+          <input type="hidden" name="nationality" id="nationality">
+        </fieldset>
+
+        <!-- THEME -->
+        <fieldset class="option-group" data-field="theme">
+          <legend>Color theme</legend>
+          <div class="chip-row">
+            <button type="button" class="chip theme-chip" onclick="selectOption('theme', this)">
+              <span class="swatch" style="background: #d4c5b2;"></span> Neutral
+            </button>
+            <button type="button" class="chip theme-chip" onclick="selectOption('theme', this)">
+              <span class="swatch" style="background: #f8c8d4;"></span> Pastel
+            </button>
+            <button type="button" class="chip theme-chip" onclick="selectOption('theme', this)">
+              <span class="swatch" style="background: #e63946;"></span> Bold
+            </button>
+          </div>
+          <input type="hidden" name="theme" id="theme">
+        </fieldset>
+
+        <!-- COMPLEXITY -->
+        <fieldset class="option-group" data-field="complexity">
+          <legend>Color intensity</legend>
+          <div class="chip-row">
+            <button type="button" class="chip" onclick="selectOption('complexity', this)">Minimal</button>
+            <button type="button" class="chip" onclick="selectOption('complexity', this)">Balanced</button>
+            <button type="button" class="chip" onclick="selectOption('complexity', this)">Bold</button>
+          </div>
+          <input type="hidden" name="complexity" id="complexity">
+        </fieldset>
+
+        <div class="submit-wrap">
+          <button type="submit" class="submit-btn" id="submitBtn" disabled>
+            <span class="btn-text">✦ Reveal My Look</span>
+            <span class="btn-shimmer"></span>
+          </button>
+          <p class="submit-hint" id="submitHint">Complete all selections above</p>
+        </div>
+
+      </form>
+    </main>
+
+    <footer class="site-footer">
+      <p>StyleAI · Personalized fashion, powered by AI</p>
+    </footer>
+
+  </div>
+
+<script>
+const REQUIRED = ['age','gender','occasion','theme','complexity'];
+const selected = {};
+
+function selectOption(fieldId, el) {
+  const parent = el.closest('.chip-row');
+  parent.querySelectorAll('.chip').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+
+  // Strip emoji prefix from value
+  let val = el.innerText.trim().replace(/^[^\w]+\s*/u,'');
+  // For nationality strip emoji too
+  if (fieldId === 'nationality') val = el.innerText.trim().replace(/^[^\w]+\s*/u,'');
+  document.getElementById(fieldId).value = val;
+  selected[fieldId] = val;
+
+  // Show/hide nationality
+  if (fieldId === 'occasion') {
+    const natGroup = document.getElementById('nationalityGroup');
+    if (val.toLowerCase() === 'wedding') {
+      natGroup.classList.remove('hidden');
+    } else {
+      natGroup.classList.add('hidden');
+      delete selected['nationality'];
+      document.getElementById('nationality').value = '';
+    }
+  }
+
+  updateProgress();
+}
+
+function updateProgress() {
+  const occasion = document.getElementById('occasion').value;
+  let required = [...REQUIRED];
+  if (occasion.toLowerCase() === 'wedding') required.push('nationality');
+
+  const filled = required.filter(k => selected[k] && selected[k].length > 0);
+  const pct = Math.round((filled.length / required.length) * 100);
+
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent =
+    pct === 100 ? '✓ All set! Ready to style you.' : `${filled.length} of ${required.length} preferences selected`;
+
+  const btn = document.getElementById('submitBtn');
+  const hint = document.getElementById('submitHint');
+  if (pct === 100) {
+    btn.disabled = false;
+    btn.classList.add('ready');
+    hint.style.opacity = '0';
+  } else {
+    btn.disabled = true;
+    btn.classList.remove('ready');
+    hint.style.opacity = '1';
+  }
+}
+
+// Ripple effect on chips
+document.querySelectorAll('.chip').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple';
+    const rect = this.getBoundingClientRect();
+    ripple.style.left = (e.clientX - rect.left) + 'px';
+    ripple.style.top = (e.clientY - rect.top) + 'px';
+    this.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+  });
+});
+
+// Form submit loading state
+document.getElementById('styleForm').addEventListener('submit', function() {
+  const btn = document.getElementById('submitBtn');
+  btn.querySelector('.btn-text').textContent = '✦ Styling you…';
+  btn.disabled = true;
+});
+
+updateProgress();
+</script>
+</body>
+</html>

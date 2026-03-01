@@ -1,0 +1,118 @@
+{
+  "Interview": {
+    "Male": {
+      "outfit": "Tailored blazer with crisp white shirt and slim-fit trousers",
+      "footwear": "Oxford shoes or loafers",
+      "accessories": "Minimal watch, leather belt",
+      "colors": {
+        "Minimal": ["Navy Blue", "Charcoal Grey", "White"],
+        "Balanced": ["Steel Blue", "Soft Grey", "Beige"],
+        "Bold": ["Deep Burgundy tie with Navy suit"]
+      }
+    },
+    "Female": {
+      "outfit": "Structured blazer with pencil skirt or formal trousers",
+      "footwear": "Closed-toe heels or flats",
+      "accessories": "Stud earrings, structured handbag",
+      "colors": {
+        "Minimal": ["Black", "Navy", "White"],
+        "Balanced": ["Dusty Rose", "Soft Blue", "Taupe"],
+        "Bold": ["Emerald Green blazer with neutral base"]
+      }
+    }
+  },
+
+  "Wedding": {
+    "Indian": {
+      "Female": {
+        "outfit": "Silk saree or designer lehenga",
+        "footwear": "Embellished heels or juttis",
+        "accessories": "Gold jewelry, bangles, clutch",
+        "colors": {
+          "Minimal": ["Ivory Gold", "Pastel Pink"],
+          "Balanced": ["Royal Blue", "Maroon"],
+          "Bold": ["Deep Red", "Emerald Green"]
+        }
+      },
+      "Male": {
+        "outfit": "Sherwani or kurta with Nehru jacket",
+        "footwear": "Mojari or formal loafers",
+        "accessories": "Pocket square, brooch",
+        "colors": {
+          "Minimal": ["Cream", "Beige"],
+          "Balanced": ["Royal Blue", "Wine"],
+          "Bold": ["Gold", "Deep Maroon"]
+        }
+      }
+    },
+
+    "Western": {
+      "Female": {
+        "outfit": "Elegant gown or cocktail dress",
+        "footwear": "Stilettos or block heels",
+        "accessories": "Diamond studs, clutch",
+        "colors": {
+          "Minimal": ["Champagne", "Soft Grey"],
+          "Balanced": ["Lavender", "Teal"],
+          "Bold": ["Ruby Red", "Midnight Blue"]
+        }
+      },
+      "Male": {
+        "outfit": "Three-piece suit or tuxedo",
+        "footwear": "Polished Oxford shoes",
+        "accessories": "Tie or bow tie, cufflinks",
+        "colors": {
+          "Minimal": ["Black", "Grey"],
+          "Balanced": ["Navy", "Charcoal"],
+          "Bold": ["Deep Blue velvet blazer"]
+        }
+      }
+    }
+  },
+
+  "Casual": {
+    "Male": {
+      "outfit": "Slim-fit jeans with relaxed t-shirt",
+      "footwear": "Sneakers",
+      "accessories": "Casual watch",
+      "colors": {
+        "Minimal": ["White", "Black"],
+        "Balanced": ["Olive", "Sky Blue"],
+        "Bold": ["Mustard", "Red"]
+      }
+    },
+    "Female": {
+      "outfit": "High-waist jeans with crop top or kurti",
+      "footwear": "Sneakers or sandals",
+      "accessories": "Layered necklace, sling bag",
+      "colors": {
+        "Minimal": ["Beige", "White"],
+        "Balanced": ["Peach", "Mint"],
+        "Bold": ["Hot Pink", "Electric Blue"]
+      }
+    }
+  },
+
+  "Party": {
+    "Male": {
+      "outfit": "Fitted blazer with dark jeans",
+      "footwear": "Chelsea boots",
+      "accessories": "Statement watch",
+      "colors": {
+        "Minimal": ["Black", "Grey"],
+        "Balanced": ["Navy", "Forest Green"],
+        "Bold": ["Velvet Maroon blazer"]
+      }
+    },
+    "Female": {
+      "outfit": "Bodycon dress or stylish co-ord set",
+      "footwear": "Heels",
+      "accessories": "Statement earrings",
+      "colors": {
+        "Minimal": ["Black", "Nude"],
+        "Balanced": ["Wine", "Teal"],
+        "Bold": ["Metallic Gold", "Crimson Red"]
+      }
+    }
+  }
+}

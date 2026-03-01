@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Look — StyleAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="result-page">
+
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <div class="page-wrapper">
+
+    <header class="site-header">
+      <div class="logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">StyleAI</span>
+      </div>
+      <p class="tagline">Your curated look is ready</p>
+    </header>
+
+    <main class="result-card">
+
+      <!-- Title badge -->
+      <div class="result-badge">
+        <span class="badge-occasion">{{ result.occasion }}</span>
+        <span class="badge-sep">·</span>
+        <span class="badge-theme">{{ result.theme }}</span>
+        <span class="badge-sep">·</span>
+        <span class="badge-complexity">{{ result.complexity }}</span>
+      </div>
+
+      <h1 class="result-title">Your <em>{{ result.occasion }}</em> Look</h1>
+
+      <!-- Color palette strip -->
+      {% if result.color_palette %}
+      <div class="palette-strip">
+        <span class="palette-label">🎨 Color Story</span>
+        <span class="palette-colors">{{ result.color_palette }}</span>
+      </div>
+      {% endif %}
+
+      <!-- Image cards -->
+      <div class="outfit-grid">
+
+        <div class="outfit-card" style="--delay:0s">
+          <div class="card-img-wrap">
+            <img src="{{ url_for('static', filename=result.outfit_img.replace('/static/', '')) }}"
+                 alt="Outfit" loading="lazy">
+            <div class="card-img-overlay">
+              <span>View Outfit</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <h3>👗 Outfit</h3>
+            <p>{{ result.outfit_detail }}</p>
+          </div>
+        </div>
+
+        <div class="outfit-card" style="--delay:0.12s">
+          <div class="card-img-wrap">
+            <img src="{{ url_for('static', filename=result.footwear_img.replace('/static/', '')) }}"
+                 alt="Footwear" loading="lazy">
+            <div class="card-img-overlay">
+              <span>View Footwear</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <h3>👞 Footwear</h3>
+            <p>{{ result.footwear_detail }}</p>
+          </div>
+        </div>
+
+        <div class="outfit-card" style="--delay:0.24s">
+          <div class="card-img-wrap">
+            <img src="{{ url_for('static', filename=result.accessories_img.replace('/static/', '')) }}"
+                 alt="Accessories" loading="lazy">
+            <div class="card-img-overlay">
+              <span>View Accessories</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <h3>💎 Accessories</h3>
+            <p>{{ result.accessories_detail }}</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Stylist tip -->
+      <div class="stylist-tip">
+        <div class="tip-icon">✦</div>
+        <p>{{ result.text.split('💡')[-1].strip() if '💡' in result.text else 'Balance color intensity with fabric richness for a polished look.' }}</p>
+      </div>
+
+      <!-- CTA -->
+      <div class="result-actions">
+        <a href="/" class="btn-primary">✦ Style Again</a>
+        <button class="btn-secondary" onclick="window.print()">🖨 Save Look</button>
+      </div>
+
+    </main>
+
+    <footer class="site-footer">
+      <p>StyleAI · Personalized fashion, powered by AI</p>
+    </footer>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "linguaflow",
+  "version": "2.0.0",
+  "description": "LinguaFlow — free translation app powered by @vitalets/google-translate-api",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@vitalets/google-translate-api": "^8.0.0",
+    "express": "^4.18.2"
+  }
+}
